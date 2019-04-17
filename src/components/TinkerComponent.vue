@@ -203,7 +203,7 @@
         methods: {
             callAPI(text, interactive = false, attachment = null, callback) {
                 let data = new FormData();
-                const postData = {
+                let postData = {
                     driver: 'web',
                     userId: this.userId,
                     message: text,
@@ -211,6 +211,24 @@
                     interactive,
                     attachment_data: document.getElementById('attachment').files[0]
                 };
+
+                if (this.messages.length > 0) {
+                    // add callback_id and additional parameters from last server message
+                    this.messages.reverse().some(msg => {
+                        let res = false;
+                        if (msg.original.callback_id !== undefined) {
+                            postData['callback_id'] = msg.original.callback_id;
+                            res = true;
+                        }
+
+                        if (msg.original['additionalParameters'] !== undefined) {
+                            postData['additionalParameters'] = msg.original['additionalParameters'];
+                            res = true;
+                        }
+
+                        return res;
+                    });
+                }
 
                 Object.keys(postData).forEach(key => data.append(key, postData[key]));
 
