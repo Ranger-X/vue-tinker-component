@@ -222,7 +222,7 @@
                         }
 
                         if (msg.original['additionalParameters'] !== undefined && msg.original['additionalParameters'].length) {
-                            postData['additionalParameters'] = msg.original['additionalParameters'];
+                            postData['additionalParameters'] = JSON.stringify(msg.original['additionalParameters']);
                             res = true;
                         }
 
