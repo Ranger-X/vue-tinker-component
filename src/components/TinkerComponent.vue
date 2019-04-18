@@ -221,7 +221,7 @@
                             res = true;
                         }
 
-                        if (msg.original['additionalParameters'] !== undefined) {
+                        if (msg.original['additionalParameters'] !== undefined && msg.original['additionalParameters'].length) {
                             postData['additionalParameters'] = msg.original['additionalParameters'];
                             res = true;
                         }
